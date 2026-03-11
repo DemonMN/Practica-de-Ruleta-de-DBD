@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="es">
+
+    <head>
+        <title>Ruleta Killers DBD</title>
+
+        <style>
+
+            body{
+                margin: 0;
+                height: 100vh;
+                background-image: url("Plantilla/Plantilla.png");
+                background-size: cover;
+                background-position: center;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-direction: column;
+                color: white;
+                font-family: Arial;
+            }
+            #dado{
+                width: 150px;
+                cursor: pointer;
+                transition: 0.2s;
+            }
+            #dado:hover{
+                transform:scale(1.15);
+            }
+            #dado:active{
+                transform: scale(0.9);
+            }
+            
+
+            #killerImg{
+                margin-top: 30px;
+                width: 300px;
+                display: none;
+                border-radius: 10px;
+            }
+
+            #killerNombre{
+                color: red;
+                font-size: 35px;
+                margin-top: 15px;
+                text-align: center;
+                width: 100%;
+                word-wrap: break-word;
+            }
+
+            #resultado{
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                width: 300px;
+            }
+
+        </style>
+    </head>
+
+    <body>
+
+    <img src="Dado/Random.png" id="dado" onclick="tirar()">
+
+    <div id="resultado">
+
+    <img id="killerImg" src="" onclick="tirar()">
+    <h2 id="killerNombre"></h2>
+
+    </div>
+
+    <script>
+        
+        let girando = false; 
+
+            const killers = [
+                {
+                    nombre:"El trampero",
+                    imagen:"Killers/El Trampero.png"
+                },
+                {
+                    nombre:"El Espectro",
+                    imagen:"Killers/El espectro.png"
+                },
+                {
+                    nombre:"El Pueblerino",
+                    imagen:"Killers/El Pueblerino.png"
+                },
+                {
+                    nombre:"La Enfermera",
+                    imagen:"Killers/La Enfermera.png"
+                },
+                {
+                    nombre:"La Forma",
+                    imagen:"Killers/La Forma.png"
+                },
+                {
+                    nombre:"La Bruja",
+                    imagen:"Killers/La Bruja.png"
+                },
+                {
+                    nombre:"El Doctor",
+                    imagen:"Killers/El Doctor.png"
+                },
+                {
+                    nombre:"La Cazadora",
+                    imagen:"Killers/La Cazadora.png"
+                },
+                {
+                    nombre:"El Caníbal",
+                    imagen:"Killers/El Canibal.png"
+                },
+                {
+                    nombre:"La Pesadilla",
+                    imagen:"Killers/La Pesadilla.png"
+                },
+                {
+                    nombre:"La Cerda",
+                    imagen:"Killers/La Cerda.png"
+                },
+                {
+                    nombre:"El Payaso",
+                    imagen:"Killers/El Payaso.png"
+                },
+                {
+                    nombre:"La Espíritu",
+                    imagen:"Killers/La Espiritu.png"
+                },
+                {
+                    nombre:"La Legión",
+                    imagen:"Killers/La Legion.png"
+                },
+                {
+                    nombre:"La Plaga",
+                    imagen:"Killers/La Plaga.png"
+                },
+                {
+                    nombre:"Ghost Face",
+                    imagen:"Killers/Ghostface.png"
+                },
+                {
+                    nombre:"El Demogorgon",
+                    imagen:"Killers/El Demogorgon.png"
+                },
+                {
+                    nombre:"El Oni",
+                    imagen:"Killers/El Oni.png"
+                },
+                {
+                    nombre:"El Arponero",
+                    imagen:"Killers/El Arponero.png"
+                },
+                {
+                    nombre:"Pyramid Head",
+                    imagen:"Killers/Pyramid Head.png"
+                },
+                {
+                    nombre:"El Deterioro",
+                    imagen:"Killers/El Deterioro.png"
+                },
+                {
+                    nombre:"Los Mellizos",
+                    imagen:"Killers/Los Mellizos.png"
+                },
+                {
+                    nombre:"Trickster",
+                    imagen:"Killers/Trickster.png"
+                },
+                {
+                    nombre:"Némesis",
+                    imagen:"Killers/Nemesis.png"
+                },
+                {
+                    nombre:"Pinhead",
+                    imagen:"Killers/Pinhead.png"
+                },
+                {
+                    nombre:"La Artista",
+                    imagen:"Killers/La Artista.png"
+                },
+                {
+                    nombre:"La Onryō",
+                    imagen:"Killers/La Onryo.png"
+                },
+                {
+                    nombre:"La Draga",
+                    imagen:"Killers/La Draga.png"
+                },
+                {
+                    nombre:"Wesker",
+                    imagen:"Killers/Wesker.png"
+                },
+                {
+                    nombre:"El Caballero",
+                    imagen:"Killers/El Caballero.png"
+                },
+                {
+                    nombre:"La Comerciante de Calaveras",
+                    imagen:"Killers/La Comerciante de Calaveras.png"
+                },
+                {
+                    nombre:"La Singularidad",
+                    imagen:"Killers/La Singularidad.png"
+                },
+                {
+                    nombre:"Xenomorfo",
+                    imagen:"Killers/Xenomorfo.png"
+                },
+                {
+                    nombre:"El Chico Bueno",
+                    imagen:"Killers/El Chico Bueno.png"
+                },
+                {
+                    nombre:"El Desconocido",
+                    imagen:"Killers/Lo Desconocido.png"
+                },
+                {
+                    nombre:"El Liche",
+                    imagen:"Killers/El Liche.png"
+                },
+                {
+                    nombre:"El Señor Oscuro",
+                    imagen:"Killers/El Señor Oscuro.png"
+                },
+                {
+                    nombre:"El Ghoul",
+                    imagen:"Killers/El Ghoul.png"
+                },
+                {
+                    nombre:"El Animatronico",
+                    imagen:"Killers/El Animatronico.png"
+                },
+                {
+                    nombre:"La Krasue",
+                    imagen:"Killers/La Krasue.png"
+                },
+                {
+                    nombre:"El Uno/ El Primero",
+                    imagen:"Killers/Uno.png"
+                },
+                {
+                    nombre:"La Maestra de Canes",
+                    imagen:"Killers/La Maestra de Canes.png"
+                }
+            ];
+            function tirar(){
+
+             if(girando) return;
+                girando = true;
+                
+                document.getElementById("dado").style.display = "none";
+                document.getElementById("killerImg").style.cursor = "default";
+
+                let velocidad = 25;
+                let tiempoTotal = 0;
+                let duracion = 10000
+
+                function animar() {
+
+                    let random = Math.floor(Math.random()*killers.length);
+                    let killer = killers[random];
+
+                    document.getElementById("killerImg").src = killer.imagen;
+                    document.getElementById("killerImg").style.display = "block";
+                    document.getElementById("killerNombre").innerText = killer.nombre;
+                    
+                    tiempoTotal += velocidad;
+                    if(tiempoTotal < duracion){
+
+                        velocidad += 10;
+                        setTimeout(animar, velocidad);
+
+                    }else{
+                            girando = false;
+                            document.getElementById("killerImg").style.cursor = "pointer";
+                        }
+                    }
+                    animar();
+                }
+        </script>
+
+    </body>
+</html>
