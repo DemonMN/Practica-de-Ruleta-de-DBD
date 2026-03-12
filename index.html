@@ -243,6 +243,7 @@
                     imagen:"Killers/La Maestra de Canes.png"
                 }
             ];
+        let girando = false;
             function tirar(){
 
              if(girando) return;
@@ -251,11 +252,15 @@
                 document.getElementById("dado").style.display = "none";
                 document.getElementById("killerImg").style.cursor = "default";
 
-                let velocidad = 25;
-                let tiempoTotal = 0;
-                let duracion = 10000
+                let duracion = 8000
+                let inicio = null;
+                let ultimoCambio = 0;
 
-                function animar() {
+                function animar(timestamp) {
+                    if(!inicio) inicio = timestamp;
+                    let proceso = timestamp - inicio;
+                    if(proceso - ultimoCambio > 60){
+                        ultimoCambio = proceso;
 
                     let random = Math.floor(Math.random()*killers.length);
                     let killer = killers[random];
@@ -263,21 +268,20 @@
                     document.getElementById("killerImg").src = killer.imagen;
                     document.getElementById("killerImg").style.display = "block";
                     document.getElementById("killerNombre").innerText = killer.nombre;
-                    
-                    tiempoTotal += velocidad;
-                    if(tiempoTotal < duracion){
+                    }
 
-                        velocidad += 10;
-                        setTimeout(animar, velocidad);
+                    if(proceso < duracion){
+                        requestAnimationFrame(animar);
 
                     }else{
                             girando = false;
                             document.getElementById("killerImg").style.cursor = "pointer";
                         }
                     }
-                    animar();
+                    requestAnimationFrame(animar);
                 }
         </script>
 
     </body>
+
 </html>
